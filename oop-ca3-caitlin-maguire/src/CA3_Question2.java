@@ -1,3 +1,4 @@
+import java.security.KeyPair;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -54,15 +55,13 @@ public class CA3_Question2 {
             this.c = c;
             this.r = r;
         }
-
     }
 
     //stack
-    private static Stack<Integer> fillStack = new Stack<Integer>();
+    private static final Stack<pair> fillStack = new Stack<pair>();
 
     /*
         Starter function to create the 2D array and populate it with 0
-
      */
     public static int[][] floodFillStart() {
         Scanner kb = new Scanner(System.in);
@@ -93,7 +92,8 @@ public class CA3_Question2 {
         Scanner kb = new Scanner(System.in);
         int userRow;
         int userColumn;
-        int fill = 1;
+        //fillCell used to keep track of coordinates, incrementing the number for each coordinate
+        int fillCell = 0;
 
         System.out.println("Enter starting row:");
         userRow = kb.nextInt();
@@ -101,36 +101,42 @@ public class CA3_Question2 {
         System.out.println("Enter starting column:");
         userColumn = kb.nextInt();
 
-        fillStack.push(userRow);
-        fillStack.push(userColumn);
-        System.out.println(fillStack);
+        fillStack.push(new pair(userRow, userColumn));
+        r = userRow;
+        c = userColumn;
+        pair currentCell = new pair(r, c);
+//        System.out.println(fillStack);
+
 
         //keep track of what cell it is on (row,column)
-        int currentCell;
         //While the stack is not empty
         while (!fillStack.isEmpty()) {
-            //check top element
-//            if (fillStack.peek() == currentCell) {
-                //pop off (r,c) from top
-//                fillStack.pop(currentCell);
-//            }
-
-            //use the getters & setters to get the rows & columns
-
-            //Check if rows & columns are 0 and then increment them to now have the next fill number
-            if (r == 0 || c == 0) {
-                //increment the fill value
-                fill++;
+            //check if the current cell (r,c) is at the top of the stack
+            if (currentCell == fillStack.peek()) {
+                // pop off (r,c) from top
+                fillStack.pop();
+                //check if the coordinates are 0
+                if (arr[r][c] == 0) {
+                    //increment fill for each coordinate
+                    fillCell++;
+                } else {
+                    //check neighbour coordinates
+                    if (userRow -1 == 0 || userColumn + 1 == 0 || userRow + 1 == 0 || userColumn - 1 == 0) {
+                        //push on to stack
+                        fillStack.push(currentCell);
+                        //then change from 0 to next fillCell number
+                        fillCell++;
+                    }
+                }
             }
-//            fillStack.push(currentCell);
         }
-
+        display(arr);
     }
+
 
     public static void start() {
         int[][] arr = floodFillStart();
         fill(0, 0, arr);
-        display(arr);
     }
 
     public static void main(String[] args) {
