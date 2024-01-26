@@ -57,9 +57,6 @@ public class CA3_Question2 {
         }
     }
 
-    //stack
-    private static final Stack<pair> fillStack = new Stack<pair>();
-
     /*
         Starter function to create the 2D array and populate it with 0
      */
@@ -88,55 +85,48 @@ public class CA3_Question2 {
     }
 
     private static void fill(int r, int c, int[][] arr) {
-        //Prompt for starting row and column - starting cell for the flood fill
-        Scanner kb = new Scanner(System.in);
-        int userRow;
-        int userColumn;
         //fillCell used to keep track of coordinates, incrementing the number for each coordinate
         int fillCell = 0;
 
-        System.out.println("Enter starting row:");
-        userRow = kb.nextInt();
+        //stack
+        Stack<pair> fillStack = new Stack<pair>();
 
-        System.out.println("Enter starting column:");
-        userColumn = kb.nextInt();
-
-        fillStack.push(new pair(userRow, userColumn));
-        r = userRow;
-        c = userColumn;
-        pair currentCell = new pair(r, c);
-//        System.out.println(fillStack);
-
+        fillStack.push(new pair(r, c));
 
         //keep track of what cell it is on (row,column)
         //While the stack is not empty
         while (!fillStack.isEmpty()) {
-            //check if the current cell (r,c) is at the top of the stack
-            if (currentCell == fillStack.peek()) {
-                // pop off (r,c) from top
-                fillStack.pop();
-                //check if the coordinates are 0
-                if (arr[r][c] == 0) {
-                    //increment fill for each coordinate
-                    fillCell++;
-                } else {
-                    //check neighbour coordinates
-                    if (userRow -1 == 0 || userColumn + 1 == 0 || userRow + 1 == 0 || userColumn - 1 == 0) {
-                        //push on to stack
-                        fillStack.push(currentCell);
-                        //then change from 0 to next fillCell number
-                        fillCell++;
-                    }
-                }
+            // pop off (r,c) from top
+            fillStack.pop();
+            //check if the coordinates are 0
+            if (arr[r][c] == 0) {
+                //increment fill for each coordinate
+                fillCell++;
+            }
+
+            //check neighbour coordinates - north, east, south, west
+            if (r - 1 == 0 || c + 1 == 0 || r + 1 == 0 || c - 1 == 0) {
+                //push on to stack
+                fillStack.push(new pair(r,c));
+                //then change from 0 to next fillCell number
+                fillCell++;
             }
         }
-        display(arr);
     }
 
-
     public static void start() {
+        //Prompt for starting row and column - starting cell for the flood fill
+        Scanner kb = new Scanner(System.in);
+
+        System.out.println("Enter starting row:");
+        int r = kb.nextInt();
+
+        System.out.println("Enter starting column:");
+        int c = kb.nextInt();
+
         int[][] arr = floodFillStart();
-        fill(0, 0, arr);
+        fill(r, c, arr);
+        display(arr);
     }
 
     public static void main(String[] args) {
