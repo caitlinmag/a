@@ -101,37 +101,41 @@ public class CA3_Question2 {
             // pop off (r,c) from top
             fillStack.pop();
 
-            //check if the coordinates are 0
-            if (arr[r][c] == 0) {
-                //increment fill for each coordinate
-                arr[r][c] = fillOrder++;
+            //iterate through the array, checking the row and columns
+            for (r = 0; r < arr.length; r++) {
+                for (c = 0; c < arr[0].length; c++) {
+                    //check if the coordinates are 0
+                    if (arr[r][c] == 0) {
+                        //increment fill for each coordinate
+                        arr[r][c] = fillOrder++;
 
-                //check neighbour coordinates
-                //north - one row up
-                if (r - 1 >= 0 && arr[r - 1][c] == 0) {
-                    //push coordinates on to stack
-                    fillStack.push(new pair(r - 1, c));
-                    //then change the array from 0,0 to next fillCell number
-                    arr[r - 1][c] = fillOrder++;
-                }
-                //east - one column to right
-                if (c + 1 < arr[0].length && arr[r][c + 1] == 0) {
-                    fillStack.push(new pair(r, c + 1));
-                    arr[r][c + 1] = fillOrder++;
-                }
-                //south - one row down
-                if (r + 1 < arr.length && arr[r + 1][c] == 0) {
-                    fillStack.push(new pair(r + 1, c));
-                    arr[r + 1][c] = fillOrder++;
-                }
-                //west - one column to the left
-                if (c - 1 >= 0 && arr[r][c - 1] == 0) {
-                    fillStack.push(new pair(r, c - 1));
-                    arr[r][c - 1] = fillOrder++;
+                        //check neighbour coordinates
+                        //north - one row up
+                        if (r - 1 >= 0 && arr[r - 1][c] == 0) {
+                            //push coordinates on to stack
+                            fillStack.push(new pair(r - 1, c));
+                            //then change the array from 0,0 to next fillCell number
+                            arr[r - 1][c] = fillOrder++;
+                        }
+                        //east - one column to right
+                        if (c + 1 < arr[0].length && arr[r][c + 1] == 0) {
+                            fillStack.push(new pair(r, c + 1));
+                            arr[r][c + 1] = fillOrder++;
+                        }
+                        //south - one row down
+                        if (r + 1 < arr.length && arr[r + 1][c] == 0) {
+                            fillStack.push(new pair(r + 1, c));
+                            arr[r + 1][c] = fillOrder++;
+                        }
+                        //west - one column to the left
+                        if (c - 1 >= 0 && arr[r][c - 1] == 0) {
+                            fillStack.push(new pair(r, c - 1));
+                            arr[r][c - 1] = fillOrder++;
+                        }
+                    }
                 }
             }
         }
-
     }
 
     public static void start() {
