@@ -65,9 +65,9 @@ ASSUME tags are separated by spaces & there is no text inside tags
         while (!htmlStack.isEmpty()) {
             htmlStack.pop();
 
-            //if at the end of the stack is empty (top element)
+            //if at the end of the stack is empty (top element) - opening tag
             if (!htmlStack.peek().isEmpty()) {
-
+                htmlStack.push(tag);
             } else {
                 //not balanced
                 //closing tag - pop the stack

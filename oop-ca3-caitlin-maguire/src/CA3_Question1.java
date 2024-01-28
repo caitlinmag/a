@@ -20,6 +20,7 @@ public class CA3_Question1 {
 
             //RETRIEVE - negative
             if (carNumberplate < 0) {
+                //if driveway stack is NOT empty - (cars in the driveway)
                 if (!driveway.isEmpty()) {
                     //check position of the car - then the cars behind will need pushed on to the street stack
                     while (driveway.peek() != -carNumberplate) {
