@@ -32,28 +32,28 @@ public class CA3_Question2 {
 
     //Simple pair class - to store row and column
     public static class pair {
-        private int c;
         private int r;
-
-        public int getC() {
-            return c;
-        }
+        private int c;
 
         public int getR() {
             return r;
         }
 
-        public void setC(int c) {
-            this.c = c;
+        public int getC() {
+            return c;
         }
 
         public void setR(int r) {
             this.r = r;
         }
 
-        public pair(int c, int r) {
+        public void setC(int c) {
             this.c = c;
+        }
+
+        public pair(int r, int c) {
             this.r = r;
+            this.c = c;
         }
     }
 
@@ -61,7 +61,6 @@ public class CA3_Question2 {
         Starter function to create the 2D array and populate it with 0
      */
     public static int[][] floodFillStart() {
-        Scanner kb = new Scanner(System.in);
 
         int[][] arr = new int[10][10];
         for (int x = 0; x < 10; x++) {
@@ -93,7 +92,13 @@ public class CA3_Question2 {
         Stack<pair> fillStack = new Stack<pair>();
 
         //push the row & column to the stack as a pair
-        fillStack.push(new pair(c, r));
+        fillStack.push(new pair(r, c));
+
+        //if I make a pair object
+        //use this object to get the peek top element
+        //make int variables for i and j, make i and j equal to currentCell.getR(); and currentCell.getC();
+        //then change r and c in for loop to i and j
+        //try keep r and c in the for loop bracket, and change the rest in the if statements to i and j
 
         //keep track of what cell it is on (row,column)
         //While the stack is not empty
@@ -102,35 +107,31 @@ public class CA3_Question2 {
             fillStack.pop();
 
             //iterate through the array, checking the rows and columns
-            for (r = 1; r < arr.length; r++) {
-                for (c = 1; c < arr[0].length; c++) {
+            for (r = 0; r < arr.length; r++) {
+                for (c = 0; c < arr.length; c++) {
                     //check if the coordinates are 0
-                    if (arr[c][r] == 0) {
+                    if (arr[r][c] == 0) {
                         //increment fill for each coordinate
-                        arr[c][r] = fillOrder++;
+                        arr[r][c] = fillOrder++;
 
                         //check neighbour coordinates and fill to the next fillOrder number
                         //north - one row up
-                        if (r - 1 >= 0 && arr[c][r - 1] == 0) {
+                        if (r - 1 > 0 && arr[r - 1][c] == 0) {
                             //push coordinates on to stack
-                            fillStack.push(new pair(c, r - 1));
-                            //then change the array from 0,0 to next fillCell number
-                            arr[c][r - 1] = fillOrder++;
+                            fillStack.push(new pair(r - 1, c));
                         }
                         //east - one column to right
-                        if (c + 1 < arr.length && arr[c + 1][r] == 0) {
-                            fillStack.push(new pair(c + 1, r));
-                            arr[c + 1][r] = fillOrder++;
+                        //max is 10
+                        if (c + 1 < 10 && arr[r][c + 1] == 0) {
+                            fillStack.push(new pair(r, c + 1));
                         }
                         //south - one row down
-                        if (r + 1 < arr.length && arr[c][r + 1] == 0) {
-                            fillStack.push(new pair(c, r + 1));
-                            arr[c][r + 1] = fillOrder++;
+                        if (r + 1 < 10 && arr[r + 1][c] == 0) {
+                            fillStack.push(new pair(r + 1, c));
                         }
                         //west - one column to the left
-                        if (c - 1 >= 0 && arr[c - 1][r] == 0) {
-                            fillStack.push(new pair(c - 1, r));
-                            arr[c - 1][r] = fillOrder++;
+                        if (c - 1 > 0 && arr[r][c - 1] == 0) {
+                            fillStack.push(new pair(r, c - 1));
                         }
                     }
                 }
@@ -138,19 +139,18 @@ public class CA3_Question2 {
         }
     }
 
-
     public static void start() {
-//        //Prompt for starting row and column - starting cell for the flood fill
+        //Prompt for starting row and column - starting cell for the flood fill
         Scanner kb = new Scanner(System.in);
-
-        System.out.println("Enter starting column:");
-        int c = kb.nextInt();
 
         System.out.println("Enter starting row:");
         int r = kb.nextInt();
 
+        System.out.println("Enter starting column:");
+        int c = kb.nextInt();
+
         int[][] arr = floodFillStart();
-        fill(c, r, arr);
+        fill(r, c, arr);
         display(arr);
     }
 
