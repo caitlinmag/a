@@ -38,6 +38,7 @@ ASSUME tags are separated by spaces & there is no text inside tags
 
      */
     public static void main(String[] args) throws FileNotFoundException {
+        //checking the correct files are valid and invalid
         String[] files = {"tags_valid.txt", "tags_invalid.txt"};
         for (String fName : files) {
             System.out.print(fName + ": ");
@@ -60,21 +61,30 @@ ASSUME tags are separated by spaces & there is no text inside tags
         //opening tag - push to stack
         htmlStack.push(tag);
 
-        //if opening and closing tags dont match
+        //if at the end of the stack is empty (top element) - opening tag
         //stack is not empty
         while (!htmlStack.isEmpty()) {
-            htmlStack.pop();
+            //opening tag then push
+            htmlStack.push(tag);
 
-            //if at the end of the stack is empty (top element) - opening tag
-            if (!htmlStack.peek().isEmpty()) {
+            //if opening and closing tags dont match
+            //check the opening tag - should have a closing tag
+            if (htmlStack.firstElement() == htmlStack.lastElement()) {
                 htmlStack.push(tag);
+
+                //check if nesting tag inside the opening tag
+//                if(){
+//
+//                }
+
+                //if it is a closing tag then pop the stack
+                htmlStack.pop();
+
+                //else - opening tag and closing tag dont match
             } else {
-                //not balanced
                 //closing tag - pop the stack
                 htmlStack.pop();
             }
-
-
         }
     }
 }
