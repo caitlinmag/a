@@ -12,14 +12,15 @@ import java.util.Set;
 
 public class CA3_Question3 {
     /*
+       What I need to do:
        Reading file
        produce index of all identifiers in file
        identifiers -> variable names, class names , and keywords
-       Declare scanner in for reading file   DONE
-       call in.useDelimiter("[^A-Za-z0-9_]+") DONE
+       Declare scanner in for reading file
+       call in.useDelimiter("[^A-Za-z0-9_]+")
        Each identifier print all lines, with line number
-       consider identifier as string consisting only of letters, numbers , and underscrores DONE
-       each call to next returns identifier DONE
+       consider identifier as string consisting only of letters, numbers , and underscrores 
+       each call to next returns identifier
      */
 
     public static void readFile(String fileName) throws FileNotFoundException {
@@ -37,11 +38,11 @@ public class CA3_Question3 {
 
         //key is the identifier
         String key = "";
-        //value is the line number
-        int value = 0;
 
         //count line numbers starting from 0
         int lineNum = 0;
+
+        System.out.println("Identifiers and corresponding line numbers:");
 
         //create a while loop to scan through the file
         while (in.hasNext()) {
@@ -51,16 +52,20 @@ public class CA3_Question3 {
             lineNum++;
             //Put the identifier and its line number into the hash map
             identifierMap.put(key, lineNum);
-            System.out.println(key + " " +  lineNum);
+
+            //display identifiers and the corresponding line numbers
+            System.out.println(key + "  " +  lineNum);
         }
 
-        Set<String> keyset = identifierMap.keySet();
-        //display identifiers and the corresponding line numbers
-        System.out.println("All identifiers and corresponding line numbers");
-       //enhanced for loop to iterate through identifiers and print identifier and line number
-        for (String identifiers: keyset){
-            System.out.println(identifiers + " -> " + identifierMap.get(identifiers));
-        }
+//        Set<String> keyset = identifierMap.keySet();
+//
+//        System.out.println("All identifiers and corresponding line numbers");
+//
+//       //enhanced for loop to iterate through identifiers and print identifier and line number
+//        for (String identifiers: keyset){
+//            System.out.println(identifiers + " -> " + identifierMap.get(identifiers));
+//        }
+
     }
 
 
