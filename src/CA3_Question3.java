@@ -51,16 +51,16 @@ public class CA3_Question3 {
             lineNum++;
             //Put the identifier and its line number into the hash map
             identifierMap.put(key, lineNum);
-            System.out.println(key + lineNum);
+            System.out.println(key + " " +  lineNum);
         }
 
-//        Set<String> keyset = identifierMap.keySet();
-//        //display identifiers and the corresponding line numbers
-//        System.out.println("All identifiers and corresponding line numbers");
-//       //enhanced for loop to iterate through identifiers and print identifier and line number
-//        for (String identifiers: keyset){
-//            System.out.println(identifiers + " -> " + identifierMap.get(identifiers));
-//        }
+        Set<String> keyset = identifierMap.keySet();
+        //display identifiers and the corresponding line numbers
+        System.out.println("All identifiers and corresponding line numbers");
+       //enhanced for loop to iterate through identifiers and print identifier and line number
+        for (String identifiers: keyset){
+            System.out.println(identifiers + " -> " + identifierMap.get(identifiers));
+        }
     }
 
 
