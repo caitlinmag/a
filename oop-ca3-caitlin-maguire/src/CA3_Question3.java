@@ -22,12 +22,12 @@ public class CA3_Question3 {
        each call to next returns identifier DONE
      */
 
-    public static void readFile(String fileName) {
+    public static void readFile(String fileName) throws FileNotFoundException {
         //read a java source file - fileName defined in the main
         File f = new File(fileName);
 
         //Declare scanner in to read from the source file
-        Scanner in = new Scanner(fileName);
+        Scanner in = new Scanner(f);
 
         //call delimiter - identifier considered as a string consisting only of letters, numbers , and underscrores
         in.useDelimiter("[^A-Za-z0-9_]+");
@@ -47,19 +47,20 @@ public class CA3_Question3 {
         while (in.hasNext()) {
             //calling in.next() returns an identifier
             key = in.next();
-            //Put the identifier and its line number into the hash map
-            identifierMap.put(key, lineNum);
             //increment the line number for each identifier
             lineNum++;
+            //Put the identifier and its line number into the hash map
+            identifierMap.put(key, lineNum);
+            System.out.println(key + lineNum);
         }
 
-        Set<String> keyset = identifierMap.keySet();
-        //display identifiers and the corresponding line numbers
-        System.out.println("All identifiers and corresponding line numbers");
-       //enhanced for loop to iterate through identifiers and print identifier and line number
-        for (String identifiers: keyset){
-            System.out.println(identifiers + " -> " + identifierMap.get(identifiers));
-        }
+//        Set<String> keyset = identifierMap.keySet();
+//        //display identifiers and the corresponding line numbers
+//        System.out.println("All identifiers and corresponding line numbers");
+//       //enhanced for loop to iterate through identifiers and print identifier and line number
+//        for (String identifiers: keyset){
+//            System.out.println(identifiers + " -> " + identifierMap.get(identifiers));
+//        }
     }
 
 
