@@ -19,7 +19,7 @@ public class CA3_Question3 {
        Declare scanner in for reading file
        call in.useDelimiter("[^A-Za-z0-9_]+")
        Each identifier print all lines, with line number
-       consider identifier as string consisting only of letters, numbers , and underscrores 
+       consider identifier as string consisting only of letters, numbers , and underscrores
        each call to next returns identifier
      */
 

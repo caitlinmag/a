@@ -26,7 +26,59 @@ ASSUME tags are separated by spaces & there is no text inside tags
         filename: name of the file to test.
      */
     public static boolean validate(String filename) throws FileNotFoundException {
-        return false;
+//        return false;
+
+        File f = new File(filename);
+//        scanner to scan through file
+        Scanner in = new Scanner(f);
+
+        //Create stack to hold html tags
+        Stack<String> htmlStack = new Stack<String>();
+
+        //Make a string to check the tags
+        String tag = "";
+
+//        //opening tag - push to stack
+//        htmlStack.push(tag);
+
+        //if at the end of the stack is empty (top element) - opening tag
+        while (in.hasNext()) {
+             tag = in.next();
+
+            //opening tag then push
+            htmlStack.push(tag);
+
+            System.out.println(htmlStack);
+
+            //check opening tag - also must have a closing tag
+            if (htmlStack.peek().contains("<")) {
+                //then push it on to the stack
+                htmlStack.push(tag);
+
+                //check if there is another tag - and if it is it needs to be closed
+                if (htmlStack.contains("<")) {
+                    //push other tag to stack
+                    htmlStack.push(tag);
+                    //does it contain a closing tag
+                    if (htmlStack.contains("</")) {
+                        htmlStack.push(tag);
+                    }
+                }
+                //check closing tag - if it matches the opening tag and contains /
+                if (htmlStack.lastElement().matches(htmlStack.peek()) && htmlStack.lastElement().contains("/")) {
+                    //closing tag - pop from the stack
+                    htmlStack.pop();
+                }
+            } else {
+                System.out.println("The tags do not match ");
+                //closing tag - then pop the stack - when the opening and closing tag dont match
+            }
+            System.out.println(htmlStack);
+        }
+//        return false;
+
+        //stack is not empty
+        return htmlStack.isEmpty();
     }
 
     /*
@@ -49,42 +101,5 @@ ASSUME tags are separated by spaces & there is no text inside tags
             }
         }
 
-        //Create stack to hold html tags
-        Stack<String> htmlStack = new Stack<String>();
-
-//        File f = new File(fileName);
-        //scanner to scan through file
-//        Scanner in = new Scanner();
-
-        String tag = "";
-
-        //opening tag - push to stack
-        htmlStack.push(tag);
-
-        //if at the end of the stack is empty (top element) - opening tag
-        //stack is not empty
-        while (!htmlStack.isEmpty()) {
-            //opening tag then push
-            htmlStack.push(tag);
-
-            //if opening and closing tags dont match
-            //check the opening tag - should have a closing tag
-            if (htmlStack.firstElement() == htmlStack.lastElement()) {
-                htmlStack.push(tag);
-
-                //check if nesting tag inside the opening tag
-//                if(){
-//
-//                }
-
-                //if it is a closing tag then pop the stack
-                htmlStack.pop();
-
-                //else - opening tag and closing tag dont match
-            } else {
-                //closing tag - pop the stack
-                htmlStack.pop();
-            }
-        }
     }
 }
