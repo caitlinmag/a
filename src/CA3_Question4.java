@@ -43,7 +43,7 @@ ASSUME tags are separated by spaces & there is no text inside tags
 
         //if at the end of the stack is empty (top element) - opening tag
         while (in.hasNext()) {
-             tag = in.next();
+            tag = in.next();
 
             //opening tag then push
             htmlStack.push(tag);
@@ -55,31 +55,31 @@ ASSUME tags are separated by spaces & there is no text inside tags
                 //then push it on to the stack
                 htmlStack.push(tag);
 
-                //check if there is another tag - and if it is it needs to be closed
-                if (htmlStack.contains("<")) {
+                //check closing tag - if it matches the opening tag and contains /
+//            } else if (htmlStack.lastElement().matches(htmlStack.peek()) && htmlStack.lastElement().contains("/")) {
+             if(htmlStack.lastElement().contains("</") &&  htmlStack.lastElement().matches(htmlStack.peek())) {
+                 //closing tag - pop from the stack
+                 htmlStack.pop();
+
+                 //check if there is another tag - and if it is it needs to be closed
+             } else if (htmlStack.contains("<")) {
                     //push other tag to stack
                     htmlStack.push(tag);
                     //does it contain a closing tag
-                    if (htmlStack.contains("</")) {
-                        htmlStack.push(tag);
-                    }
                 }
-                //check closing tag - if it matches the opening tag and contains /
-                if (htmlStack.lastElement().matches(htmlStack.peek()) && htmlStack.lastElement().contains("/")) {
-                    //closing tag - pop from the stack
-                    htmlStack.pop();
+            else {
+                    System.out.println("The tags do not match ");
+                    //closing tag - then pop the stack - when the opening and closing tag dont match
                 }
-            } else {
-                System.out.println("The tags do not match ");
-                //closing tag - then pop the stack - when the opening and closing tag dont match
-            }
-            System.out.println(htmlStack);
-        }
-//        return false;
+                System.out.println(htmlStack);
 
-        //stack is not empty
-        return htmlStack.isEmpty();
+        }
     }
+    //        return false;
+
+    //stack is not empty
+            return htmlStack.isEmpty();
+}
 
     /*
         This function tests the files in the files array to see if

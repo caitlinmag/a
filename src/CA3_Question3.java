@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Name:
@@ -36,6 +33,12 @@ public class CA3_Question3 {
         //create a map to hold identifiers(String) and their line numbers(Integer)
         Map<String, Integer> identifierMap = new HashMap<>();
 
+        //Come back to question 3 and make the changes:
+        //create a list to store when identifiers are in multiple lines
+        //Would need to then add the list into the hashmap
+        //Use an if statement within the while loop to check if the identifier (key) has been found already
+        //Then it would be put into the list
+
         //key is the identifier
         String key = "";
 
@@ -56,16 +59,6 @@ public class CA3_Question3 {
             //display identifiers and the corresponding line numbers
             System.out.println(key + "  " +  lineNum);
         }
-
-//        Set<String> keyset = identifierMap.keySet();
-//
-//        System.out.println("All identifiers and corresponding line numbers");
-//
-//       //enhanced for loop to iterate through identifiers and print identifier and line number
-//        for (String identifiers: keyset){
-//            System.out.println(identifiers + " -> " + identifierMap.get(identifiers));
-//        }
-
     }
 
 
