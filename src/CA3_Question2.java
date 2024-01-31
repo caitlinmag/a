@@ -7,29 +7,6 @@ import java.util.Stack;
  * Class Group:
  */
 public class CA3_Question2 {
-    /*
-    - Empty pixels will be given colour
-    - Stop when reach occupied pixel
-    - Get the starting row & column - starting cell
-    - push (row,column)pair on to stack
-    - Make simple pair class storing the row & column DONE
-
-    - While loop for if stack is not empty
-    do these until stack is empty :
-    - POP off (row,column)pair from top of stack -
-    if the element is the top then pop it off
-    - not filled then - fill the corresponding cell with a number
-    the number is added on at each step to show order of fill - maybe use a count
-    - PUSH coordinates(row,column)pair of unfilled neighbours(still 0) in north,east,south & west directions on the stack
-     north - one row up
-     east - one column to right
-     south - one row down
-     west - one column to left
-     -> idea is to keep checking if neighbours are 0 until there is no values of 0 in the 2d array
-
-    - stack is empty then print the entire 2D array
-     */
-
     //Simple pair class - to store row and column
     public static class pair {
         private int r;
@@ -86,7 +63,7 @@ public class CA3_Question2 {
 
     private static void fill(int r, int c, int[][] arr) {
         //fillOrder used to keep track of coordinates, incrementing the number for each coordinate
-        int fillOrder = 0;
+        int fillOrder = 1; //set to 1 otherwise 0 is included in the 2d array
 
         //create stack to hold row and column pairs
         Stack<pair> fillStack = new Stack<pair>();
@@ -94,46 +71,39 @@ public class CA3_Question2 {
         //push the row & column to the stack as a pair
         fillStack.push(new pair(r, c));
 
-        //if I make a pair object
-        //use this object to get the peek top element
-        //make int variables for i and j, make i and j equal to currentCell.getR(); and currentCell.getC();
-        //then change r and c in for loop to i and j
-        //try keep r and c in the for loop bracket, and change the rest in the if statements to i and j
-
         //keep track of what cell it is on (row,column)
         //While the stack is not empty
         while (!fillStack.isEmpty()) {
-            // pop off (r,c) from top
-            fillStack.pop();
+//            fillStack.pop();
 
-            //iterate through the array, checking the rows and columns
-            for (r = 0; r < arr.length; r++) {
-                for (c = 0; c < arr.length; c++) {
-                    //check if the coordinates are 0
-                    if (arr[r][c] == 0) {
-                        //increment fill for each coordinate
-                        arr[r][c] = fillOrder++;
+            // pop off currentCell from top
+            pair currentCell = fillStack.pop();
+            int i = currentCell.getR();
+            int j = currentCell.getC();
 
-                        //check neighbour coordinates and fill to the next fillOrder number
-                        //north - one row up
-                        if (r - 1 > 0 && arr[r - 1][c] == 0) {
-                            //push coordinates on to stack
-                            fillStack.push(new pair(r - 1, c));
-                        }
-                        //east - one column to right
-                        //max is 10
-                        if (c + 1 < 10 && arr[r][c + 1] == 0) {
-                            fillStack.push(new pair(r, c + 1));
-                        }
-                        //south - one row down
-                        if (r + 1 < 10 && arr[r + 1][c] == 0) {
-                            fillStack.push(new pair(r + 1, c));
-                        }
-                        //west - one column to the left
-                        if (c - 1 > 0 && arr[r][c - 1] == 0) {
-                            fillStack.push(new pair(r, c - 1));
-                        }
-                    }
+            //check if the coordinates are 0
+            if (arr[i][j] == 0) {
+                //increment fill for each coordinate
+                arr[i][j] = fillOrder++;
+
+                //check neighbour coordinates and fill to the next fillOrder number
+                //north - one row up
+                if (i - 1 > 0 && arr[i - 1][c] == 0) {
+                    //push coordinates on to stack
+                    fillStack.push(new pair(i - 1, j));
+                }
+                //east - one column to right
+                //max is 10
+                if (j + 1 < 10 && arr[i][j + 1] == 0) {
+                    fillStack.push(new pair(i, j + 1));
+                }
+                //south - one row down
+                if (i + 1 < 10 && arr[i + 1][j] == 0) {
+                    fillStack.push(new pair(i + 1, j));
+                }
+                //west - one column to the left
+                if (j - 1 > 0 && arr[i][j - 1] == 0) {
+                    fillStack.push(new pair(i, j - 1));
                 }
             }
         }

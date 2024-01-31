@@ -28,9 +28,42 @@ queue is first in first out
 removing element -> element with most urgent priority is retrieved
 - so in this case if plane is landing it would get priority
      */
+    /*
+    QUEUES:
+    add to one end (the tail)
+    remove from other end (the head)
+     */
+
+    public static class flights {
+        private String takeoff;
+        private String landing;
+
+        public String getTakeoff() {
+            return takeoff;
+        }
+
+        public void setTakeoff(String takeoff) {
+            this.takeoff = takeoff;
+        }
+
+        public String getLanding() {
+            return landing;
+        }
+
+        public void setLanding(String landing) {
+            this.landing = landing;
+        }
+
+        public flights(String takeoff, String landing) {
+            this.takeoff = takeoff;
+            this.landing = landing;
+        }
+    }
+
+
     public static void main(String[] args) {
 //create a priority queue
-        PriorityQueue<> q = new PriorityQueue<>();
+
         //lowest value priority removed first which is 1
 
 

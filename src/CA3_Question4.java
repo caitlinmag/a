@@ -45,41 +45,42 @@ ASSUME tags are separated by spaces & there is no text inside tags
         while (in.hasNext()) {
             tag = in.next();
 
-            //opening tag then push
-            htmlStack.push(tag);
-
-            System.out.println(htmlStack);
-
             //check opening tag - also must have a closing tag
-            if (htmlStack.peek().contains("<")) {
-                //then push it on to the stack
+            //opening tag then push
+            if (tag.startsWith("<")) {
+                //push it on to the stack
                 htmlStack.push(tag);
 
-                //check closing tag - if it matches the opening tag and contains /
-//            } else if (htmlStack.lastElement().matches(htmlStack.peek()) && htmlStack.lastElement().contains("/")) {
-             if(htmlStack.lastElement().contains("</") &&  htmlStack.lastElement().matches(htmlStack.peek())) {
-                 //closing tag - pop from the stack
-                 htmlStack.pop();
-
-                 //check if there is another tag - and if it is it needs to be closed
-             } else if (htmlStack.contains("<")) {
-                    //push other tag to stack
-                    htmlStack.push(tag);
-                    //does it contain a closing tag
+                //checking closing tag
+                if (tag.endsWith("</")) {
+                    //while there are nesting tags within the opening and closing tags
+                    while (tag.contains("<") && !tag.endsWith("/>")) {
+                        htmlStack.push(tag);
+                    }
                 }
-            else {
-                    System.out.println("The tags do not match ");
-                    //closing tag - then pop the stack - when the opening and closing tag dont match
-                }
-                System.out.println(htmlStack);
+//                //check if there is another tag - and if it is it needs to be closed
+//                if (tag.contains("<")) {
+//                    //push other tag to stack
+//                    htmlStack.push(tag);
+//                }
 
+                //does it contain a closing tag
+//                if (htmlStack.lastElement().startsWith("</") && htmlStack.lastElement().matches(htmlStack.peek())) {
+//                    //closing tag - pop from the stack
+//                    htmlStack.pop();
+//                }
+            }
         }
-    }
-    //        return false;
+        //        return false;
+        if (htmlStack.isEmpty()) {
+            System.out.println("The tags match." + "Opening tag " + htmlStack.firstElement() + " and closing tag " + htmlStack.lastElement());
 
-    //stack is not empty
-            return htmlStack.isEmpty();
-}
+        } else {
+            System.out.println("The tags do not match." + "Opening tag " + htmlStack.firstElement() + " and closing tag " + htmlStack.lastElement());
+            //closing tag - then pop the stack - when the opening and closing tag dont match
+        }
+        return htmlStack.isEmpty();
+    }
 
     /*
         This function tests the files in the files array to see if
