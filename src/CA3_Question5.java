@@ -1,4 +1,7 @@
+import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Scanner;
 
 /**
  * Name:
@@ -34,38 +37,54 @@ removing element -> element with most urgent priority is retrieved
     remove from other end (the head)
      */
 
-    public static class flights {
-        private String takeoff;
-        private String landing;
-
-        public String getTakeoff() {
-            return takeoff;
-        }
-
-        public void setTakeoff(String takeoff) {
-            this.takeoff = takeoff;
-        }
-
-        public String getLanding() {
-            return landing;
-        }
-
-        public void setLanding(String landing) {
-            this.landing = landing;
-        }
-
-        public flights(String takeoff, String landing) {
-            this.takeoff = takeoff;
-            this.landing = landing;
-        }
-    }
-
-
     public static void main(String[] args) {
-//create a priority queue
+        //create 2 queues
+        Queue<String> takeoff = new LinkedList<>();
+        //landing a flight is priority - therefore use a priority queue
+        Queue<String> land = new PriorityQueue<>();
 
-        //lowest value priority removed first which is 1
+        /*
+        next - need to figure out how the program will decide which flight is priority
+         and have it print out the flight number which will be taking off or landing next -
+         as it is currently blank for the flight symbol
+         */
+        //create scanner
+        Scanner kb = new Scanner(System.in);
+        String choice = "";
+        do {
+            System.out.println("Enter takeoff, land, next or quit: ");
+            String flightSymbol = "";
+            String flight = "";
 
-
+            choice = kb.next();
+            //There are 4 Commands : takeoff, land, next or quit
+            //takeoff - put into takeoff queue
+            if (choice.equalsIgnoreCase("takeoff")) {
+                flightSymbol = kb.next();
+                //add the flight symbol to the takeoff queue
+                takeoff.add(flightSymbol);
+                System.out.println("Flight: " + flightSymbol + " in the queue for takeoff");
+            } else if (choice.equalsIgnoreCase("land")) {
+                flightSymbol = kb.next();
+                //add the flight symbol to the land queue
+                land.add(flightSymbol);
+                System.out.println("Flight: " + flightSymbol + " in the queue for landing");
+            } else if (choice.equalsIgnoreCase("next")) {
+                //next - finishes the current take off or landing and enables next one
+                //landing a plane gets priority
+                if (!land.isEmpty()) {
+                    //poll() to remove the top of the land queue
+                    flight = land.poll();
+                    System.out.println("Flight: " + flightSymbol + " is landing");
+                } else if (!takeoff.isEmpty()) {
+                    //poll() to remove the top of the takeoff queue
+                    flight = takeoff.poll();
+                    System.out.println("Flight: " + flightSymbol + " is ready for takeoff");
+                } else {
+                    System.out.println("There are no flights due to land or takeoff");
+                }
+            }
+            //quit - exit out of flight simulation
+        } while (!choice.equalsIgnoreCase("quit"));
     }
 }
