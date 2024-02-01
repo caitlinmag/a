@@ -26,8 +26,6 @@ ASSUME tags are separated by spaces & there is no text inside tags
         filename: name of the file to test.
      */
     public static boolean validate(String filename) throws FileNotFoundException {
-//        return false;
-
         File f = new File(filename);
 //        scanner to scan through file
         Scanner in = new Scanner(f);
@@ -35,51 +33,45 @@ ASSUME tags are separated by spaces & there is no text inside tags
         //Create stack to hold html tags
         Stack<String> htmlStack = new Stack<String>();
 
-        //Make a string to check the tags
-        String tag = "";
-
-//        //opening tag - push to stack
-//        htmlStack.push(tag);
-
         //if at the end of the stack is empty (top element) - opening tag
         while (in.hasNext()) {
-            tag = in.next();
+            char openingTag = '<';
+            char closingTag = '/';
 
-            //check opening tag - also must have a closing tag
-            //opening tag then push
-            if (tag.startsWith("<")) {
-                //push it on to the stack
+            //Make a string to store tags in the file as strings
+            String tag = in.next();
+
+            int indexOpeningTag = tag.indexOf(openingTag);
+            int indexClosingTag = tag.indexOf(closingTag);
+
+            //check if opening tag - push to stack
+            if (indexOpeningTag != -1) {
                 htmlStack.push(tag);
-
-                //checking closing tag
-                if (tag.endsWith("</")) {
-                    //while there are nesting tags within the opening and closing tags
-                    while (tag.contains("<") && !tag.endsWith("/>")) {
-                        htmlStack.push(tag);
-                    }
-                }
-//                //check if there is another tag - and if it is it needs to be closed
-//                if (tag.contains("<")) {
-//                    //push other tag to stack
-//                    htmlStack.push(tag);
-//                }
-
-                //does it contain a closing tag
-//                if (htmlStack.lastElement().startsWith("</") && htmlStack.lastElement().matches(htmlStack.peek())) {
-//                    //closing tag - pop from the stack
-//                    htmlStack.pop();
-//                }
             }
-        }
-        //        return false;
-        if (htmlStack.isEmpty()) {
-            System.out.println("The tags match." + "Opening tag " + htmlStack.firstElement() + " and closing tag " + htmlStack.lastElement());
+            while (!htmlStack.isEmpty() && indexClosingTag != -1) {
+                //check if closing tag - pop from stack
+//                if (indexClosingTag != -1) {
+                //to get the opening inner tag -  eg for <ul> use 1,2 to get u
+                String openingInnerTag = htmlStack.peek().substring(1, 2);
+                //to get the closing inner tag - eg for </ul;> use 2,3 to get u
+                String closingInnerTag = tag.substring(2, 3);
 
-        } else {
-            System.out.println("The tags do not match." + "Opening tag " + htmlStack.firstElement() + " and closing tag " + htmlStack.lastElement());
-            //closing tag - then pop the stack - when the opening and closing tag dont match
+                //check if inner opening and closing tags match - then pop from stack
+                if (openingInnerTag.equals(closingInnerTag)) {
+                    htmlStack.pop();
+                } else {
+                    //inner opening and closing tags do not match
+                    return false;
+                }
+                return true;
+            }
+//           int indexOpeningTag = tag.substring(0, 1).indexOf(openingTag);
+//            int indexClosingTag = tag.substring(1, 2).indexOf(closingTag);
         }
-        return htmlStack.isEmpty();
+//        if (htmlStack.isEmpty()) {
+//            return true;
+//        }
+        return false;
     }
 
     /*
