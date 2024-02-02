@@ -27,51 +27,34 @@ ASSUME tags are separated by spaces & there is no text inside tags
      */
     public static boolean validate(String filename) throws FileNotFoundException {
         File f = new File(filename);
-//        scanner to scan through file
         Scanner in = new Scanner(f);
 
-        //Create stack to hold html tags
+        //Stack to hold html tags
         Stack<String> htmlStack = new Stack<String>();
 
         //if at the end of the stack is empty (top element) - opening tag
         while (in.hasNext()) {
-            char openingTag = '<';
-            char closingTag = '/';
-
             //Make a string to store tags in the file as strings
             String tag = in.next();
 
-            int indexOpeningTag = tag.indexOf(openingTag);
-            int indexClosingTag = tag.indexOf(closingTag);
-
-            //check if opening tag - push to stack
-            if (indexOpeningTag != -1) {
-                htmlStack.push(tag);
-            }
-            while (!htmlStack.isEmpty() && indexClosingTag != -1) {
-                //check if closing tag - pop from stack
-//                if (indexClosingTag != -1) {
-                //to get the opening inner tag -  eg for <ul> use 1,2 to get u
-                String openingInnerTag = htmlStack.peek().substring(1, 2);
+            //check if it is a closing tag - pop from stack
+            if (tag.startsWith("</")) {
                 //to get the closing inner tag - eg for </ul;> use 2,3 to get u
-                String closingInnerTag = tag.substring(2, 3);
+                String closingInnerTag = tag.substring(2,3);
 
-                //check if inner opening and closing tags match - then pop from stack
-                if (openingInnerTag.equals(closingInnerTag)) {
-                    htmlStack.pop();
+                //Stack is NOT empty and the top element is equal to the closing tag
+                if (!htmlStack.isEmpty() && htmlStack.peek().equals(closingInnerTag)) {
+                    htmlStack.pop(); //pop from the stack
                 } else {
-                    //inner opening and closing tags do not match
+                    //opening and closing tags dont match
+                    htmlStack.push(tag);
                     return false;
                 }
-                return true;
+            } else if (tag.startsWith("<")) {
+                htmlStack.push(tag); //opening tag so push to stack
             }
-//           int indexOpeningTag = tag.substring(0, 1).indexOf(openingTag);
-//            int indexClosingTag = tag.substring(1, 2).indexOf(closingTag);
         }
-//        if (htmlStack.isEmpty()) {
-//            return true;
-//        }
-        return false;
+        return true;
     }
 
     /*
