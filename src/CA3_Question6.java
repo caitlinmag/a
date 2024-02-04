@@ -33,7 +33,8 @@ public class CA3_Question6 {
      */
 
     //Block class that contains quantity and price of block of shares
-    public static class block {
+    public static class Block {
+        //quantity is number of shares
         private int qty;
 
         public int getQuantity() {
@@ -52,9 +53,10 @@ public class CA3_Question6 {
             this.price = price;
         }
 
+        //price per share
         private double price;
 
-        public block(int qty, double price) {
+        public Block(int qty, double price) {
             this.qty = qty;
             this.price = price;
         }
@@ -69,23 +71,67 @@ public class CA3_Question6 {
     quit
      */
     public static void main(String[] args) {
+        //Use share class
 
-//Make a queue
-        Queue<Integer> q = new LinkedList<Integer>();
+        /*
+        keep track of order of shares being bought
+        FIFO for calculations
+         */
+        //Block queue of objects
+        Queue<Block> queue = new LinkedList<Block>();
 
         Scanner in = new Scanner(System.in);
         String command = "";
         do {
             System.out.print(">");
             command = in.next();
+            //BUY - add to the queue
             if (command.equalsIgnoreCase("buy")) {
                 int qty = in.nextInt();
                 double price = in.nextDouble();
-
+                Block b = new Block(qty, price);
+                queue.add(b);
+                //SELL - calculate the gain
             } else if (command.equals("sell")) {
-                int qty = in.nextInt();
-                double price = in.nextDouble();
+                int sellQty = in.nextInt();
+                double sellPrice = in.nextDouble();
+                double gain = 0.0;
+                Block b = new Block(sellQty, sellPrice);
+                queue.add(b);
 
+                //There are blocks in the queue AND there is more than 0 in the sell quantity  - shares can be sold
+                while (!queue.isEmpty() && sellQty > 0) {
+                    //delete from the queue
+                    queue.poll();
+//                    double profit = 0.0;
+                    /*
+                        To calculate one share:
+                        block quantity is less than or equal to sell quantity
+                        to get the gain = selling price subtract the block price multiplied by the original quantity
+                        update available share quantity iterating through the while loop
+                        calculate the quantity of shares that are left, after share is sold
+                        output the share amount and the gain associated with the share
+                     */
+                    if (b.getQuantity() <= sellQty) {
+                        gain = (sellPrice - b.getPrice()) * b.getQuantity();
+                        sellQty -= b.getQuantity();
+                        System.out.println( "Gain " + gain);
+
+                        /*
+                           To calculate multiple shares:
+                           block quantity is greater than or equal to the sell quantity
+                           profit is equal to the gain
+                           output the shares amount and the gain associated with the shares
+                         */
+                    } else {
+                        gain = (sellPrice - b.getPrice()) * sellQty;
+                        //update the quantity after shares sold
+                        b.setQuantity(b.getQuantity() - sellQty);
+                        queue.add(b);
+                        //set back to 0 again
+                        System.out.println("Gain: " + gain);
+                    }
+                }
 
             }
         } while (!command.equalsIgnoreCase("quit"));

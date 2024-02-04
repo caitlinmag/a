@@ -1,10 +1,10 @@
 import java.util.*;
+
 /**
- *  Name:
- *  Class Group:
+ * Name:
+ * Class Group:
  */
-public class CA3_Question7
-{
+public class CA3_Question7 {
     /* What do i need to do?
     extend question 6
     program that can handle shares of multiple companies
@@ -13,6 +13,35 @@ public class CA3_Question7
     HINT: have a map Map<String, Queue<Block>> that manages a separate queue for each stock symbol
     so need the queue from the previous question, and then using a map also
      */
+
+    public static class Block {
+        //quantity is number of shares
+        private int qty;
+
+        public int getQuantity() {
+            return qty;
+        }
+
+        public void setQuantity(int qty) {
+            this.qty = qty;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public void setPrice(double price) {
+            this.price = price;
+        }
+
+        //price per share
+        private double price;
+
+        public Block(int qty, double price) {
+            this.qty = qty;
+            this.price = price;
+        }
+    }
 
 
     /*
@@ -24,26 +53,24 @@ public class CA3_Question7
    quit
     */
     public static void main(String[] args) {
+        Queue<Block> queue = new LinkedList<Block>();
 
         Scanner in = new Scanner(System.in);
-        String command="";
+        String command = "";
         do {
             System.out.print(">");
             command = in.next();
-            if(command.equalsIgnoreCase("buy"))
-            {
+            if (command.equalsIgnoreCase("buy")) {
                 String company = in.next();
                 int qty = in.nextInt();
                 double price = in.nextDouble();
                 // Code to buy shares here
-            }
-            else if(command.equals("sell"))
-            {
+            } else if (command.equals("sell")) {
                 String company = in.next();
                 int qty = in.nextInt();
                 double price = in.nextDouble();
                 // Code to sell shares and calculate profit here
             }
-        }while(!command.equalsIgnoreCase("quit"));
+        } while (!command.equalsIgnoreCase("quit"));
     }
 }
