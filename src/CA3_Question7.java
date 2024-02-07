@@ -54,6 +54,7 @@ public class CA3_Question7 {
     */
     public static void main(String[] args) {
         Queue<Block> queue = new LinkedList<Block>();
+//Map<String, Queue<Block>> = new HashMap<>();
 
         Scanner in = new Scanner(System.in);
         String command = "";
