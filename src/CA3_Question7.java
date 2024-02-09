@@ -17,6 +17,17 @@ public class CA3_Question7 {
     public static class Block {
         //quantity is number of shares
         private int qty;
+        private double price;
+
+        public String getSymbol() {
+            return symbol;
+        }
+
+        public void setSymbol(String symbol) {
+            this.symbol = symbol;
+        }
+
+        private String symbol;
 
         public int getQuantity() {
             return qty;
@@ -34,8 +45,9 @@ public class CA3_Question7 {
             this.price = price;
         }
 
-        //price per share
-        private double price;
+        public double getCost() {
+            return price * qty;
+        }
 
         public Block(int qty, double price) {
             this.qty = qty;
@@ -53,8 +65,10 @@ public class CA3_Question7 {
    quit
     */
     public static void main(String[] args) {
-        Queue<Block> queue = new LinkedList<Block>();
-//Map<String, Queue<Block>> = new HashMap<>();
+        //Key is String
+        //Values is queue block
+        Map<String, Queue<Block>> map = new HashMap<>();
+        double totalGain = 0.0;
 
         Scanner in = new Scanner(System.in);
         String command = "";
@@ -62,15 +76,41 @@ public class CA3_Question7 {
             System.out.print(">");
             command = in.next();
             if (command.equalsIgnoreCase("buy")) {
-                String company = in.next();
+                String symbol = in.next();
                 int qty = in.nextInt();
                 double price = in.nextDouble();
-                // Code to buy shares here
+                Block b = new Block(qty, price);
+
+                //put symbol into the map
+                if (!map.containsKey(symbol)) {
+                    map.put(symbol, new LinkedList<Block>());
+                }
+                //add b to be associated with symbol in the map
+                map.get(symbol).add(b);
             } else if (command.equals("sell")) {
-                String company = in.next();
+                String symbol = in.next();
                 int qty = in.nextInt();
-                double price = in.nextDouble();
-                // Code to sell shares and calculate profit here
+
+            //check if the symbol is in the map - then get the symbol from the map
+                if (map.containsKey(symbol)) {
+                    Queue<Block> queue = map.get(symbol);
+
+                    if (qty > 0 && !queue.isEmpty()) {
+                        //get first element of the queue - make equal to b
+                        Block b = queue.peek();
+                        int sellQty = b.getQuantity() - qty;
+                        totalGain = sellQty * b.getPrice();
+
+                        //then update the quantity of shares in block b
+                        b.setQuantity(b.getQuantity() - sellQty);
+
+                        //remove from the queue
+                        queue.poll();
+                    }
+                    System.out.println("Gain: " + totalGain);
+                }else{
+                    System.out.println("Symbol not found.");
+                }
             }
         } while (!command.equalsIgnoreCase("quit"));
     }

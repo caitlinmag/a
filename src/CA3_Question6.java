@@ -133,6 +133,8 @@ public class CA3_Question6 {
                         */
                         //if shares is more
                         //selling 50
+
+//                        b.setQuantity(b.getQuantity() - sellQty);
                     }else{
                              /* Updating quantity - need to get 50 from the second batch
                         firstbatch quantity (100) - sellQty(150)  -> needs to be taken away from queue.peek.getQuantity()
@@ -141,6 +143,8 @@ public class CA3_Question6 {
                         double updateQuantity = queue.peek().getQuantity() - (b.getQuantity() - sellQty);
 
                         b= queue.peek();
+//                        double total = b.getQuantity() * b.getPrice();
+//double sellTotal = b.getQuantity() * sellPrice;
                         double total = updateQuantity * b.getPrice();
                         double sellTotal = updateQuantity * sellPrice;
 
@@ -151,7 +155,7 @@ public class CA3_Question6 {
                         //buy 100 @ 10
                         //sell 150 @ 15
 
-                        System.out.println("Gain: " + gain);
+                        System.out.println("Gain: " + totalProfit);
                     }
                 }
             }

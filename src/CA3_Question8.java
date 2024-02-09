@@ -21,14 +21,18 @@ public class CA3_Question8 {
     public static void main(String[] args) {
         String equation;
         Scanner in = new Scanner(System.in);
-        System.out.println("Please enter equation");
+        System.out.println("Please enter equation, one number or operator per line.");
         equation = in.nextLine().trim();
 
+        Stack<Integer> nums = new Stack<>();
+        Stack<Integer> operators = new Stack<>();
         Stack<Integer> results = new Stack<Integer>();
         boolean finished = false;
 
         while (!finished) {
-            if (in.equals("+")) {
+            if (in.hasNextInt()) {
+                nums.push(in.nextInt());
+            } else if (in.equals("+")) {
                 results.push(results.pop() + results.pop());
             } else if (in.equals("-")) {
                 Integer arg2 = results.pop();
@@ -39,10 +43,10 @@ public class CA3_Question8 {
                 Integer arg2 = results.pop();
                 results.push(results.pop() / arg2);
             } else if (in.equals("()")) {
-
+                operators.push(operators.pop());
             } else if (in.equals("q") || in.equals("Q")) {
                 finished = true;
-            }else{
+            } else {
                 //not operator - integer
 //                results.push(Integer.parseInt(in));
             }
