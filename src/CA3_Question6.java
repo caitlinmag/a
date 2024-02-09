@@ -81,7 +81,7 @@ public class CA3_Question6 {
         //Block queue of objects
 //        PriorityQueue<Block> queue = new PriorityQueue<>();
         Queue<Block> queue = new LinkedList<Block>();
-        double gain = 0.0;
+        double gain;
         double firstBatchGain = 0.0;
 
         Scanner in = new Scanner(System.in);
@@ -113,32 +113,45 @@ public class CA3_Question6 {
                         calculate the quantity of shares that are left, after share is sold
                         output the share amount and the gain associated with the share
                      */
-                    if (b.getQuantity() >= sellQty) {
-                      double total = sellQty * sellPrice;
-                        //15, 12 , 100
-                        firstBatchGain = total - b.getCost();
-                        System.out.println("Share: " + sellQty +  " Gain: " + firstBatchGain);
-                        /*
+
+                    //if the shares is less than the selling quantity - check this with peek() then poll
+                    //selling 100 first
+                    if (sellQty <= b.getQuantity()) {
+//                        b = queue.peek();
+                        double total = b.getQuantity() * b.getPrice();
+                        double sellTotal = queue.peek().getQuantity() * sellPrice;
+                        firstBatchGain = sellTotal - total;
+
+//                        System.out.println("Share: " + sellQty + " Gain: " + firstBatchGain);
+                        queue.remove();
+                         /*
                            To calculate selling second batch:
                            get the gain calculated from the second batch
                            add the first batch gain to the second batch to get the total profit
                            update the quantity of shares that are left, after shares sold
                            output the gain
                         */
-                        queue.poll();
-                    } else {
-                       double total = sellQty * sellPrice;
-                        gain = total - b.getCost();
+                        //if shares is more
+                        //selling 50
+                    }else{
+                             /* Updating quantity - need to get 50 from the second batch
+                        firstbatch quantity (100) - sellQty(150)  -> needs to be taken away from queue.peek.getQuantity()
+                        -> which is what is left in the queue after it is removed
+                         */
+                        double updateQuantity = queue.peek().getQuantity() - (b.getQuantity() - sellQty);
+
+                        b= queue.peek();
+                        double total = updateQuantity * b.getPrice();
+                        double sellTotal = updateQuantity * sellPrice;
+
+                        gain = sellTotal - total;
                         double totalProfit = firstBatchGain + gain;
 
                         //buy 100 @ 12
                         //buy 100 @ 10
                         //sell 150 @ 15
 
-//                      gain = (sellPrice - b.getPrice()) * sellQty;
-//                        b.setQuantity(b.getQuantity() - sellQty);
-//                        queue.add(b);
-                        System.out.println("Gain: " + totalProfit);
+                        System.out.println("Gain: " + gain);
                     }
                 }
             }
