@@ -3,23 +3,11 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
- * Name:
- * Class Group:
+ * Name: Caitlin Maguire
+ * Class Group: SD2B
  */
 
 public class CA3_Question3 {
-    /*
-       What I need to do:
-       Reading file
-       produce index of all identifiers in file
-       identifiers -> variable names, class names , and keywords
-       Declare scanner in for reading file
-       call in.useDelimiter("[^A-Za-z0-9_]+")
-       Each identifier print all lines, with line number
-       consider identifier as string consisting only of letters, numbers , and underscrores
-       each call to next returns identifier
-     */
-
     public static void readFile(String fileName) throws FileNotFoundException {
         //read a java source file - fileName defined in the main
         File f = new File(fileName);
@@ -30,14 +18,8 @@ public class CA3_Question3 {
         //call delimiter - identifier considered as a string consisting only of letters, numbers , and underscrores
         in.useDelimiter("[^A-Za-z0-9_]+");
 
-        //create a map to hold identifiers(String) and their line numbers(Integer)
-        Map<String, Integer> identifierMap = new HashMap<>();
-
-        //Come back to question 3 and make the changes:
-        //create a list to store when identifiers are in multiple lines
-        //Would need to then add the list into the hashmap
-        //Use an if statement within the while loop to check if the identifier (key) has been found already
-        //Then it would be put into the list
+        //create a map to hold identifiers(String) and an int arrayList to hold multiple line numbers if the delimiter is present in multiple lines
+        Map<String, ArrayList<Integer>> identifierMap = new HashMap<>();
 
         //key is the identifier
         String key = "";
@@ -45,22 +27,35 @@ public class CA3_Question3 {
         //count line numbers starting from 0
         int lineNum = 0;
 
-        System.out.println("Identifiers and corresponding line numbers:");
-
         //create a while loop to scan through the file
         while (in.hasNext()) {
             //calling in.next() returns an identifier
             key = in.next();
             //increment the line number for each identifier
             lineNum++;
-            //Put the identifier and its line number into the hash map
-            identifierMap.put(key, lineNum);
 
-            //display identifiers and the corresponding line numbers
-            System.out.println(key + "  " +  lineNum);
+            //if the identifier is not in the map
+            if (!identifierMap.containsKey(key)) {
+                // Create arraylist to store multiple line numbers
+                ArrayList<Integer> multipleLines = new ArrayList<>();
+                //Add the line number into the arraylist
+                multipleLines.add(lineNum);
+                //Put the identifier (key) and its line number (multiple lines) into the  map
+                identifierMap.put(key, multipleLines);
+            } else {
+                //if identifier is only on one line then add the line number to the map
+                identifierMap.get(key).add(lineNum);
+            }
+        }
+
+        System.out.println("Identifiers and corresponding line numbers:");
+        //Iterating through enhanced for loop with the same format in the MapsDemo example
+        for (Map.Entry<String, ArrayList<Integer>> entry : identifierMap.entrySet()) {
+            key = entry.getKey();
+            ArrayList<Integer> multipleLines = entry.getValue();
+            System.out.println(key + " -> " + multipleLines);
         }
     }
-
 
     public static void main(String[] args) throws FileNotFoundException {
         readFile("src/CA3_Question1.java");

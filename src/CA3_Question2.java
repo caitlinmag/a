@@ -3,8 +3,8 @@ import java.util.Scanner;
 import java.util.Stack;
 
 /**
- * Name:
- * Class Group:
+ * Name: Caitlin Maguire
+ * Class Group: SD2B
  */
 public class CA3_Question2 {
     //Simple pair class - to store row and column

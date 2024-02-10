@@ -1,8 +1,8 @@
 import java.util.*;
 
 /**
- * Name:
- * Class Group:
+ * Name: Caitlin Maguire
+ * Class Group: SD2B
  */
 public class CA3_Question7 {
     /* What do i need to do?
@@ -81,7 +81,8 @@ public class CA3_Question7 {
                 double price = in.nextDouble();
                 Block b = new Block(qty, price);
 
-                //put symbol into the map
+                //if the map does not contain the symbol
+                //then put symbol into the map and create new block queue
                 if (!map.containsKey(symbol)) {
                     map.put(symbol, new LinkedList<Block>());
                 }

@@ -5,8 +5,8 @@ import java.util.Queue;
 import java.util.Scanner;
 
 /**
- * Name:
- * Class Group:
+ * Name: Caitlin Maguire
+ * Class Group: SD2B
  */
 public class CA3_Question6 {
     /*

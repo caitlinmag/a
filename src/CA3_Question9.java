@@ -1,6 +1,6 @@
 /**
- *  Name:
- *  Class Group:
+ * Name: Caitlin Maguire
+ * Class Group: SD2B
  */
 
 /*
