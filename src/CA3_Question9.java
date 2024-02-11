@@ -66,9 +66,8 @@ public class CA3_Question9 {
 
     /*
         Implement a backtracking algorithim to find a path through a maze from start to exit
-
      */
-    public static void solve(int x, int y, DIRECTION dir, int[][] image) {
+    public static void solve(int x, int y, int[][] image) {
         //create stack to hold the points x,y
         Stack<path> backtrackingStack = new Stack<>();
         int visited = 1;
@@ -82,7 +81,8 @@ public class CA3_Question9 {
             int i = currentPath.getX();
             int j = currentPath.getY();
 
-            /*  Follow path until you reach an exit, intersection or dead end
+            /*
+                Follow path until you reach an exit, intersection or dead end
                 Checking directions of paths that have been visited in the maze
                 If the path has been visited then push 1 to the stack to be displayed
                 Using a switch statement to check which enum direction has been entered
@@ -91,53 +91,56 @@ public class CA3_Question9 {
                 //change path to visited
                 image[i][j] = visited;
 
-                switch (dir) {
-                    case NORTH:
-                        //one row up
-                        if (i > 0 && image[i - 1][j] == 0) {
-                            //push the path points on to stack
-                            backtrackingStack.push(new path(i - 1, j));
-                        }
-                        break;
-                    case EAST:
-                        //one column to the right
-                        if (j + 1 < 10 && image[i][j + 1] == 0) {
-                            backtrackingStack.push(new path(i, j + 1));
-                        }
-                        break;
-                    case SOUTH:
-                        //one row down
-                        if (i + 1 < 10 && image[i + 1][j] == 0) {
-                            backtrackingStack.push(new path(i + 1, j));
-                        }
-                        break;
-                    case WEST:
-                        //one column to the left
-                        if (j - 1 > 0 && image[i][j - 1] == 0) {
-                            backtrackingStack.push(new path(i, j - 1));
-                        }
-                        break;
+                //enhanced for loop to iterate the direction enums
+                for (DIRECTION dir : DIRECTION.values()) {
+                    switch (dir) {
+                        case NORTH:
+                            //one row up
+                            if (i > 0 && image[i - 1][j] == 0) {
+                                //push the path points on to stack
+                                backtrackingStack.push(new path(i - 1, j));
+                            }
+                            break;
+                        case EAST:
+                            //one column to the right
+                            if (j + 1 < 10 && image[i][j + 1] == 0) {
+                                backtrackingStack.push(new path(i, j + 1));
+                            }
+                            break;
+                        case SOUTH:
+                            //one row down
+                            if (i + 1 < 10 && image[i + 1][j] == 0) {
+                                backtrackingStack.push(new path(i + 1, j));
+                            }
+                            break;
+                        case WEST:
+                            //one column to the left
+                            if (j - 1 > 0 && image[i][j - 1] == 0) {
+                                backtrackingStack.push(new path(i, j - 1));
+                            }
+                            break;
+                    }
                 }
             }
-
+        }
+            /*
+                If an intersection is found
+                Push all paths (which meet at the intersection) on to the stack
+                Don't push the current path on to stack - pop from the stack
+             */
+         if (isIntersection(x, y)) {
+            backtrackingStack.push(new path(x, y));
+            backtrackingStack.pop();
+             System.out.println("You have reached an intersection");
+        } else if (isDeadEnd(x, y)) {
+            System.out.println("You have reached a dead end.");
+        }
             /*
                 If you found an exit
                 Then print congratulations!
              */
-
-            if (isExit(x, y)) {
-                System.out.println("Congratulations!");
-            }
-            /*
-                If an intersection is found
-                Push all paths (which meet at the intersection) on to the stack
-                Don't push the current path on to stack (use x,y instead of i,j)
-             */
-            else if (isIntersection(x, y)) {
-                backtrackingStack.push(new path(x, y));
-            } else if (isDeadEnd(x,y)) {
-                System.out.println("You have reached a dead end.");
-            }
+        else if (isExit(x, y)) {
+            System.out.println("Congratulations! Exit found.");
         }
     }
 
@@ -148,9 +151,9 @@ public class CA3_Question9 {
      */
     public static boolean isExit(int i, int j) {
         if (i + 1 < 10 || j + 1 < 10) {
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 
@@ -168,18 +171,18 @@ public class CA3_Question9 {
 
     /*
         Method to check if you found a dead end
-        Deadend is if i and j is 0,0
+        Deadend is if i and j have reached a point that is not equal to 0
      */
     public static boolean isDeadEnd(int i, int j) {
-        if (i == 0 && j == 0) {
+        if (i != 0 && j != 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     public static void start() {
-        //Prompt for starting points - starting cell for the flood fill
+        //Prompt for starting points for the maze
         Scanner kb = new Scanner(System.in);
 
         System.out.println("Enter starting point 1:");
@@ -187,12 +190,9 @@ public class CA3_Question9 {
 
         System.out.println("Enter starting point 2:");
         int y = kb.nextInt();
-
-        System.out.println("Enter direction (NORTH, EAST,SOUTH or WEST)");
-        String direction = kb.next();
-
+        
         int[][] image = startMaze();
-        solve(x, y, DIRECTION.valueOf(direction), image);
+        solve(x, y, image);
         display(image);
     }
 
