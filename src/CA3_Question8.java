@@ -35,7 +35,7 @@ public class CA3_Question8 {
                 Then Push to numbers stack
              */
             if (in.hasNextInt()) {
-                numbers.push((int) c);
+                numbers.push((int)c);
             }
             /*
                 Read an opening parenthesis (
@@ -51,9 +51,12 @@ public class CA3_Question8 {
                 Pop the opening parenthesis
             */
             else if (isOperator(c)) {
-                while (highPrecedence(operators.peek()) >= highPrecedence(c)) {
+                while(highPrecedence(operators.peek()) == true && highPrecedence(c) == false) {
                     evaluateTop(numbers, operators);
                 }
+//                while (highPrecedence(operators.peek()) >= highPrecedence(c)) {
+//                    evaluateTop(numbers, operators);
+//                }
                 operators.pop();
             }
             /*
@@ -72,9 +75,15 @@ public class CA3_Question8 {
                 No input
                 While operator stack is not empty then evaluate the top
              */
-            else if (!in.hasNextLine()) {
-                while (!operators.isEmpty()) {
-                    evaluateTop(numbers, operators);
+//            else if (!in.hasNextLine()) {
+//                while (!operators.isEmpty()) {
+//                    evaluateTop(numbers, operators);
+//                }
+//            }
+
+            else{
+                while(!operators.isEmpty()){
+                    evaluateTop(numbers,operators);
                 }
             }
         }
@@ -95,14 +104,15 @@ public class CA3_Question8 {
         * and / has highest precedence
         + and - have the lowest precedence
      */
-    public static int highPrecedence(char op) {
+    public static boolean highPrecedence(char op) {
         if (op == '+' || op == '-') {
-            return 1;
+            return false;
         }
-        if (op == '*' || op == '/') {
-            return 2;
+        else if (op == '*' || op == '/') {
+            return true;
+        }else{
+            return false;
         }
-        return 0;
     }
 
     /*
@@ -140,6 +150,7 @@ public class CA3_Question8 {
             //divide numbers
             case '/':
                 numbers.push(num1 / num2);
+            break;
         }
 
     }

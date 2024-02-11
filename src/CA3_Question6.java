@@ -123,7 +123,7 @@ public class CA3_Question6 {
                         firstBatchGain = sellTotal - total;
 
 //                        System.out.println("Share: " + sellQty + " Gain: " + firstBatchGain);
-                        queue.remove();
+                        queue.poll();
                          /*
                            To calculate selling second batch:
                            get the gain calculated from the second batch
@@ -135,14 +135,15 @@ public class CA3_Question6 {
                         //selling 50
 
 //                        b.setQuantity(b.getQuantity() - sellQty);
-                    }else{
+                    } else {
                              /* Updating quantity - need to get 50 from the second batch
                         firstbatch quantity (100) - sellQty(150)  -> needs to be taken away from queue.peek.getQuantity()
                         -> which is what is left in the queue after it is removed
                          */
                         double updateQuantity = queue.peek().getQuantity() - (b.getQuantity() - sellQty);
+//                        b.setQuantity(b.getQuantity() - sellQty);
 
-                        b= queue.peek();
+//                        b = queue.peek();
 //                        double total = b.getQuantity() * b.getPrice();
 //double sellTotal = b.getQuantity() * sellPrice;
                         double total = updateQuantity * b.getPrice();
@@ -156,6 +157,7 @@ public class CA3_Question6 {
                         //sell 150 @ 15
 
                         System.out.println("Gain: " + totalProfit);
+                        queue.poll();
                     }
                 }
             }
