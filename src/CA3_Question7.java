@@ -5,13 +5,11 @@ import java.util.*;
  * Class Group: SD2B
  */
 public class CA3_Question7 {
-    /* What do i need to do?
-    extend question 6
-    program that can handle shares of multiple companies
-    user enters commands buy symbol quantity price, sell symbol quantity
+    /*
+        Multi-Company Stock sharex tax calculation (Queue)
 
-    HINT: have a map Map<String, Queue<Block>> that manages a separate queue for each stock symbol
-    so need the queue from the previous question, and then using a map also
+        HINT: have a map Map<String, Queue<Block>> that manages a separate queue for each stock symbol
+        so need the queue from the previous question, and then using a map also
      */
 
     public static class Block {
@@ -82,7 +80,7 @@ public class CA3_Question7 {
                 Block b = new Block(qty, price);
 
                 //if the map does not contain the symbol
-                //then put symbol into the map and create new block queue
+                //then put symbol into the map and create new block queue -  for each stock symbol
                 if (!map.containsKey(symbol)) {
                     map.put(symbol, new LinkedList<Block>());
                 }
@@ -99,6 +97,8 @@ public class CA3_Question7 {
                     if (qty > 0 && !queue.isEmpty()) {
                         //get first element of the queue - make equal to b
                         Block b = queue.peek();
+
+                        //Calculate the sellQuantity by taking the users input quantity away from quantity of block b
                         int sellQty = b.getQuantity() - qty;
                         totalGain = sellQty * b.getPrice();
 
@@ -108,6 +108,7 @@ public class CA3_Question7 {
                         //remove from the queue
                         queue.poll();
                     }
+                    //Output the gain
                     System.out.println("Gain: " + totalGain);
                 }else{
                     System.out.println("Symbol not found.");

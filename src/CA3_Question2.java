@@ -6,6 +6,9 @@ import java.util.Stack;
  * Class Group: SD2B
  */
 public class CA3_Question2 {
+    /*
+        Flood Fill (Stack)
+     */
     //Simple pair class - to store row and column
     public static class pair {
         private int r;
@@ -73,8 +76,6 @@ public class CA3_Question2 {
         //keep track of what cell it is on (row,column)
         //While the stack is not empty
         while (!fillStack.isEmpty()) {
-//            fillStack.pop();
-
             // pop off currentCell from top
             pair currentCell = fillStack.pop();
             int i = currentCell.getR();

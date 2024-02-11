@@ -19,13 +19,6 @@ public class CA3_Question6 {
     FIFO rule: first sell all shares of first batch profit = 300
     then 50 for second batch profit = 250
     then total profit is 550
-
-    write program to make these calculations for arbitrary purchases & sales of shares in a
-    SINGLE COMPANY
-    User enters commands: buy quantity price, sell quantity (display the gain), quit
-
-    HINT: keep a queue of objects of a class Block that contains quantity and price
-    of block of shares
      */
 
     /*
@@ -78,8 +71,6 @@ public class CA3_Question6 {
         keep track of order of shares being bought
         FIFO for calculations
          */
-        //Block queue of objects
-//        PriorityQueue<Block> queue = new PriorityQueue<>();
         Queue<Block> queue = new LinkedList<Block>();
         double gain;
         double firstBatchGain = 0.0;

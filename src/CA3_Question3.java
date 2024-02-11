@@ -8,6 +8,9 @@ import java.util.*;
  */
 
 public class CA3_Question3 {
+    /*
+        Java Identifier Count (Map)
+     */
     public static void readFile(String fileName) throws FileNotFoundException {
         //read a java source file - fileName defined in the main
         File f = new File(fileName);
@@ -18,7 +21,10 @@ public class CA3_Question3 {
         //call delimiter - identifier considered as a string consisting only of letters, numbers , and underscrores
         in.useDelimiter("[^A-Za-z0-9_]+");
 
-        //create a map to hold identifiers(String) and an int arrayList to hold multiple line numbers if the delimiter is present in multiple lines
+        /*
+             create a map to hold identifiers(String) and an integer arrayList to hold multiple line numbers
+             in the case that a delimiter is present in multiple lines
+         */
         Map<String, ArrayList<Integer>> identifierMap = new HashMap<>();
 
         //key is the identifier
@@ -49,7 +55,11 @@ public class CA3_Question3 {
         }
 
         System.out.println("Identifiers and corresponding line numbers:");
-        //Iterating through enhanced for loop with the same format in the MapsDemo example
+
+        /*
+            Iterating through the identifierMap using an enhanced for loop
+            Using the same type of format that is used in the MapsDemo example that we did in class
+         */
         for (Map.Entry<String, ArrayList<Integer>> entry : identifierMap.entrySet()) {
             key = entry.getKey();
             ArrayList<Integer> multipleLines = entry.getValue();

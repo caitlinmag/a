@@ -9,17 +9,8 @@ import java.util.Stack;
  */
 public class CA3_Question4 {
 /*
-Using stack
--in the powerpoint - 15.6 stack and queue applications -
-slide 55 is similar to the question on html tags-
-only difference is dealing with the opening and closing tags
-
-Program to check if a sequence of HTML tags are properly nested
-For each opening tag (eg <p> must have a closing tag </p>)
-- p tag may have other tags (eg <p> <ul> <li> </li> </u> <a> </p>)
-inner tags must be closed before outer tags
-process a file containing tags
-ASSUME tags are separated by spaces & there is no text inside tags
+    Nested HTML Tags (Stack)
+    - program is not fully working
  */
 
     /*

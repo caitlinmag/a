@@ -28,7 +28,6 @@ public class CA3_Question1 {
                 Pop cars (that are in the way) from the driveway stack
                 Then push to street stack
              */
-
             if (carNumberplate < 0) {
                 if (!driveway.isEmpty()) {
                     while (driveway.peek() != -carNumberplate) {

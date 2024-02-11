@@ -9,28 +9,10 @@ import java.util.Scanner;
  */
 
 public class CA3_Question5 {
+/*
+    Airport Flights (Queue)
+ */
 
-    /* What do i need to do?
-    Using a queue to mimic airport flights
-    - airport = ONLY 1 runway
-    - runway is busy = planes (take off or landing) have to wait
-    - landing planes get priority = PRIORITY QUEUE - so would be highest number
-    - user enters commands takeoff flightSymbol, land flightSymbol, next and quit
-    - first 2 commands place flight in appropriate queue
-    - next command finishes the current take off or landing and enables the next one
-    -> printing the action (takeoff or land) & the flight symbol
-
-    Example: takeoff( “Flight-100”); // is queued
-    takeoff(“Flight-220”); // is queued
-    land(“Flight-320”); // is queued
-    next(); // will complete the takeoff/landing of the
-    // current flight and initiate landing of
-    // the next prioritized flight’ i.e. Flight-320
-
-queue is first in first out
-removing element -> element with most urgent priority is retrieved
-- so in this case if plane is landing it would get priority
-     */
     /*
     QUEUES:
     add to one end (the tail)
@@ -43,18 +25,14 @@ removing element -> element with most urgent priority is retrieved
         //landing a flight is priority - therefore use a priority queue
         PriorityQueue<String> land = new PriorityQueue<>();
 
-        /*
-        next - need to figure out how the program will decide which flight is priority
-         and have it print out the flight number which will be taking off or landing next -
-         as it is currently blank for the flight symbol
-         */
-        //create scanner
         Scanner kb = new Scanner(System.in);
         String choice = "";
         do {
             System.out.println("Enter takeoff, land, next or quit: ");
             String flightSymbol = "";
             String flight = "";
+
+//            first 2 commands place flight in appropriate queue - takeoff and land
 
             choice = kb.next();
             //There are 4 Commands : takeoff, land, next or quit
