@@ -190,7 +190,7 @@ public class CA3_Question9 {
 
         System.out.println("Enter starting point 2:");
         int y = kb.nextInt();
-        
+
         int[][] image = startMaze();
         solve(x, y, image);
         display(image);
