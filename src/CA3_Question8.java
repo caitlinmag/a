@@ -34,14 +34,14 @@ public class CA3_Question8 {
                 Read in a number
                 Then Push to numbers stack
              */
-            if (in.hasNextInt()) {
+            while (in.hasNextInt()) {
                 numbers.push((int)c);
             }
             /*
                 Read an opening parenthesis (
                 Then Push on to operators stack
             */
-            else if (c == ('(')) {
+             if (c == ('(')) {
                 operators.push(c);
             }
             /*
@@ -51,13 +51,14 @@ public class CA3_Question8 {
                 Pop the opening parenthesis
             */
             else if (isOperator(c)) {
-                while(highPrecedence(operators.peek()) == true && highPrecedence(c) == false) {
+                operators.push(c);
+                if (highPrecedence(operators.peek())) {
                     evaluateTop(numbers, operators);
                 }
 //                while (highPrecedence(operators.peek()) >= highPrecedence(c)) {
 //                    evaluateTop(numbers, operators);
 //                }
-                operators.pop();
+//                operators.pop();
             }
             /*
                 Read a closing parenthesis )
@@ -69,7 +70,6 @@ public class CA3_Question8 {
                 while (operators.peek() != c) {
                     evaluateTop(numbers, operators);
                 }
-                operators.pop();
             }
             /*
                 No input
@@ -80,7 +80,6 @@ public class CA3_Question8 {
 //                    evaluateTop(numbers, operators);
 //                }
 //            }
-
             else{
                 while(!operators.isEmpty()){
                     evaluateTop(numbers,operators);
@@ -103,6 +102,13 @@ public class CA3_Question8 {
         Method to check if an operator has a higher precedence as another operator
         * and / has highest precedence
         + and - have the lowest precedence
+     */
+
+    /*
+        highPrecedence method is not working as it should, but if I had more time to spend on it
+        I would have tried a different way at checking if the operator is * or / , and then carry out
+        those parts of the equation, after that is complete then checking for + or - and carry out
+        that part.
      */
     public static boolean highPrecedence(char op) {
         if (op == '+' || op == '-') {
@@ -137,18 +143,22 @@ public class CA3_Question8 {
         switch (op) {
             //add numbers
             case '+':
+                operators.push(op);
                 numbers.push(num1 + num2);
                 break;
             //subtract numbers
             case '-':
+                operators.push(op);
                 numbers.push(num1 - num2);
                 break;
             //multiply numbers
             case '*':
+                operators.push(op);
                 numbers.push(num1 * num2);
                 break;
             //divide numbers
             case '/':
+                operators.push(op);
                 numbers.push(num1 / num2);
             break;
         }

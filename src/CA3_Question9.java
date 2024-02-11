@@ -67,7 +67,7 @@ public class CA3_Question9 {
     /*
         Implement a backtracking algorithim to find a path through a maze from start to exit
      */
-    public static void solve(int x, int y, int[][] image) {
+    public static void solve(int x, int y,DIRECTION dir, int[][] image) {
         //create stack to hold the points x,y
         Stack<path> backtrackingStack = new Stack<>();
         int visited = 1;
@@ -91,8 +91,15 @@ public class CA3_Question9 {
                 //change path to visited
                 image[i][j] = visited;
 
+                /*
+                    I tried using an enhanced for loop to iterate through all of the direction enums
+                    however this doesn't allow the user to input a direction, and carries out all of the directions output
+                    at the same time, so I changed it back to only allow one direction to be input.
+                 */
+
                 //enhanced for loop to iterate the direction enums
-                for (DIRECTION dir : DIRECTION.values()) {
+
+//                for (DIRECTION dir : DIRECTION.values()) {
                     switch (dir) {
                         case NORTH:
                             //one row up
@@ -120,7 +127,7 @@ public class CA3_Question9 {
                             }
                             break;
                     }
-                }
+//                }
             }
         }
             /*
@@ -191,8 +198,11 @@ public class CA3_Question9 {
         System.out.println("Enter starting point 2:");
         int y = kb.nextInt();
 
+        System.out.println("Enter direction (NORTH,EAST,SOUTH or WEST)");
+        String d = kb.next();
+
         int[][] image = startMaze();
-        solve(x, y, image);
+        solve(x, y, DIRECTION.valueOf(d), image);
         display(image);
     }
 
