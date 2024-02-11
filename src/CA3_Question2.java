@@ -91,7 +91,7 @@ public class CA3_Question2 {
                     //push coordinates on to stack
                     fillStack.push(new pair(i - 1, j));
                 }
-                //east - one column to right
+                //east - one column to the right
                 //max is 10
                 if (j + 1 < 10 && arr[i][j + 1] == 0) {
                     fillStack.push(new pair(i, j + 1));
